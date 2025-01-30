@@ -1,0 +1,26 @@
+
+
+> @elizaos/plugin-node@0.1.9-alpha.1 build /Users/gdesign/developer-projects/laborales/upstreet/eliza-private/packages/plugin-node
+> tsup --format esm --dts
+
+[34mCLI[39m Building entry: src/index.ts
+[34mCLI[39m Using tsconfig: tsconfig.json
+[34mCLI[39m tsup v8.3.5
+[34mCLI[39m Using tsup config: /Users/gdesign/developer-projects/laborales/upstreet/eliza-private/packages/plugin-node/tsup.config.ts
+[34mCLI[39m Target: esnext
+[34mCLI[39m Cleaning output folder
+[34mESM[39m Build start
+[32mESM[39m [1mdist/node-ponyfill-XYSXBJLI.js     [22m[32m183.00 B[39m
+[32mESM[39m [1mdist/chunk-PLDDJCW6.js             [22m[32m2.10 KB[39m
+[32mESM[39m [1mdist/index.js                      [22m[32m392.06 KB[39m
+[32mESM[39m [1mdist/wrapper-IANJ3KLP.js           [22m[32m130.02 KB[39m
+[32mESM[39m [1mdist/chunk-W2OETGYU.js             [22m[32m582.50 KB[39m
+[32mESM[39m [1mdist/node-ponyfill-XYSXBJLI.js.map [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/chunk-PLDDJCW6.js.map         [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/wrapper-IANJ3KLP.js.map       [22m[32m209.83 KB[39m
+[32mESM[39m [1mdist/index.js.map                  [22m[32m1.04 MB[39m
+[32mESM[39m [1mdist/chunk-W2OETGYU.js.map         [22m[32m378.84 KB[39m
+[32mESM[39m ⚡️ Build success in 590ms
+DTS Build start
+DTS ⚡️ Build success in 8797ms
+DTS dist/index.d.ts 7.76 KB
