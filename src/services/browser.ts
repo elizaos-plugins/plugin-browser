@@ -1,5 +1,6 @@
 import { generateText, type IBrowserService, trimTokens } from "@elizaos/core";
 import { parseJSONObjectFromText } from "@elizaos/core";
+import { Service } from "@elizaos/core";
 import { settings } from "@elizaos/core";
 import { type IAgentRuntime, ModelClass, ServiceType } from "@elizaos/core";
 import { stringToUuid } from "@elizaos/core";
@@ -56,7 +57,7 @@ type PageContent = {
     bodyContent: string;
 };
 
-export class BrowserService {
+export class BrowserService extends Service implements IBrowserService {
     private browser: Browser | undefined;
     private context: BrowserContext | undefined;
     private blocker: PlaywrightBlocker | undefined;
@@ -172,9 +173,14 @@ export class BrowserService {
                 elizaLogger.log(
                     "Browser context not initialized. Call initializeBrowser() first."
                 );
+                throw new Error("Browser context not initialized");
             }
 
             page = await this.context.newPage();
+
+            if (!page) {
+                throw new Error("Failed to create new page");
+            }
 
             // Enable stealth mode
             await page.setExtraHTTPHeaders({
@@ -190,6 +196,7 @@ export class BrowserService {
 
             if (!response) {
                 elizaLogger.error("Failed to load the page");
+                throw new Error("Failed to load the page");
             }
 
             if (response.status() === 403 || response.status() === 404) {
