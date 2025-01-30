@@ -1,67 +1,132 @@
-# @elizaos/plugin-node
+# @elizaos/plugin-browser
 
-Core Node.js plugin for Eliza OS that provides AWS S3 integration for file operations and cloud storage.
+Browser automation plugin for Eliza OS that provides web scraping and browser automation capabilities.
 
 ## Overview
 
-The Node plugin serves as a foundational component of Eliza OS, providing AWS S3 integration for cloud-based file management and storage capabilities.
+The Browser plugin serves as a powerful component of Eliza OS, providing browser automation and web scraping capabilities using Playwright. It enables automated web interactions, content extraction, and browser-based tasks for Eliza agents.
 
 ## Features
 
-- **AWS S3 Integration**: File upload and management with AWS S3
+- **Browser Automation**: Web scraping and content extraction with Playwright
+- **Multiple Browser Support**: Works with Chromium, Firefox, and WebKit
+- **Headless Mode**: Support for both headless and headed browser operations
+- **Page Interaction**: Automated form filling, clicking, and navigation
+- **Content Extraction**: HTML parsing and data extraction
+- **Screenshot Capture**: Page and element screenshot capabilities
+- **Network Handling**: Request interception and network monitoring
 
 ## Installation
 
 ```bash
-npm install @elizaos/plugin-node
+npm install @elizaos/plugin-browser
 ```
 
 ## Configuration
 
-The plugin requires AWS environment variables to function:
+The plugin may require various environment variables depending on your use case:
 
-### AWS Settings
+### Core Settings
 
 ```env
-AWS_ACCESS_KEY_ID=your_aws_access_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-AWS_REGION=your_aws_region
-AWS_S3_BUCKET=your_s3_bucket
-AWS_S3_UPLOAD_PATH=your_upload_path
-AWS_S3_ENDPOINT=an_alternative_endpoint
-AWS_S3_SSL_ENABLED=boolean(true|false)
-AWS_S3_FORCE_PATH_STYLE=boolean(true|false)
+CAPSOLVER_API_KEY=your_capsolver_api_key  # Optional: For CAPTCHA solving capabilities
 ```
 
 ## Usage
 
 ```typescript
-import { createNodePlugin } from "@elizaos/plugin-node";
+import { createBrowserPlugin } from "@elizaos/plugin-browser";
 
 // Initialize the plugin
-const nodePlugin = createNodePlugin();
+const browserPlugin = createBrowserPlugin();
 
 // Register with Eliza OS
-elizaos.registerPlugin(nodePlugin);
+elizaos.registerPlugin(browserPlugin);
 ```
 
 ## Services
 
-### AwsS3Service
+### BrowserService
 
-Handles file uploads and management with AWS S3.
+Provides comprehensive web automation and scraping capabilities using Playwright:
+
+- Page navigation and interaction
+- Form filling and submission
+- Content extraction and parsing
+- Screenshot capture
+- Network request handling
+- CAPTCHA solving (with appropriate configuration)
+
+## Safety & Security
+
+### Browser Operations
+
+- **Sandbox Environment**: Browser operations run in isolated contexts
+- **Resource Management**: Automatic cleanup of browser instances
+- **Request Filtering**: Control over network requests
+- **Memory Management**: Efficient handling of browser resources
 
 ## Troubleshooting
 
-### Common AWS S3 Issues
+### Common Issues
+
+1. **Browser Launch Failures**
 
 ```bash
-Error: AWS credentials not configured
+Error: Failed to launch browser
 ```
 
-- Verify AWS credentials are set
-- Check S3 bucket permissions
-- Ensure correct region configuration
+- Verify system dependencies are installed
+- Check for sufficient system resources
+- Ensure proper permissions
+
+2. **Page Navigation Issues**
+
+```bash
+Error: Navigation timeout
+```
+
+- Check network connectivity
+- Verify URL accessibility
+- Adjust timeout settings
+
+### Debug Mode
+
+Enable debug logging for detailed troubleshooting:
+
+```typescript
+process.env.DEBUG = "eliza:plugin-browser:*";
+```
+
+### System Requirements
+
+- Node.js 16.x or higher
+- Supported operating system (Windows, macOS, or Linux)
+- Sufficient RAM for browser operations
+- Internet connectivity
+
+## Support
+
+For issues and feature requests, please:
+
+1. Check the troubleshooting guide above
+2. Review existing GitHub issues
+3. Submit a new issue with:
+    - System information
+    - Error logs
+    - Steps to reproduce
+
+## Credits
+
+This plugin integrates with and builds upon several key technologies:
+
+- [Playwright](https://playwright.dev/) - Core browser automation
+- [CAPSolver](https://capsolver.com/) - CAPTCHA solving capabilities (optional)
+
+Special thanks to:
+
+- The Playwright community for their excellent browser automation framework
+- The Eliza community for their contributions and feedback
 
 ## License
 
