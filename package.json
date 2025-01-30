@@ -30,6 +30,10 @@
   },
   "agentConfig": {
     "pluginType": "elizaos:client:1.0.0",
-    "pluginParameters": {}
+    "pluginParameters": {
+        "CAPSOLVER_API_KEY":{
+            "type":"string"
+        }
+    }
   }
 }
