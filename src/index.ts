@@ -5,7 +5,7 @@ import {
 export const browserPlugin = {
   name: "default",
   description: "Default plugin, with basic actions and evaluators",
-  services: [new BrowserService()],
+  services: [new BrowserService() as any],
   actions: [],
 };
 

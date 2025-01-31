@@ -48,9 +48,7 @@ var _BrowserService = class _BrowserService extends Service {
     this.browser = void 0;
     this.context = void 0;
     this.blocker = void 0;
-    this.captchaSolver = new CaptchaSolver(
-      settings.CAPSOLVER_API_KEY || ""
-    );
+    this.captchaSolver = new CaptchaSolver(settings.CAPSOLVER_API_KEY || "");
   }
   static register(runtime) {
     return runtime;
@@ -119,15 +117,9 @@ var _BrowserService = class _BrowserService extends Service {
     let page;
     try {
       if (!this.context) {
-        elizaLogger.log(
-          "Browser context not initialized. Call initializeBrowser() first."
-        );
-        throw new Error("Browser context not initialized");
+        elizaLogger.log("Browser context not initialized. Call initializeBrowser() first.");
       }
       page = await this.context.newPage();
-      if (!page) {
-        throw new Error("Failed to create new page");
-      }
       await page.setExtraHTTPHeaders({
         "Accept-Language": "en-US,en;q=0.9"
       });
@@ -137,7 +129,6 @@ var _BrowserService = class _BrowserService extends Service {
       const response = await page.goto(url, { waitUntil: "networkidle" });
       if (!response) {
         elizaLogger.error("Failed to load the page");
-        throw new Error("Failed to load the page");
       }
       if (response.status() === 403 || response.status() === 404) {
         return await this.tryAlternativeSources(url, runtime);
@@ -147,13 +138,8 @@ var _BrowserService = class _BrowserService extends Service {
         await this.solveCaptcha(page, url);
       }
       const documentTitle = await page.evaluate(() => document.title);
-      const bodyContent = await page.evaluate(
-        () => document.body.innerText
-      );
-      const { title: parsedTitle, description } = await generateSummary(
-        runtime,
-        documentTitle + "\n" + bodyContent
-      );
+      const bodyContent = await page.evaluate(() => document.body.innerText);
+      const { title: parsedTitle, description } = await generateSummary(runtime, documentTitle + "\n" + bodyContent);
       const content = { title: parsedTitle, description, bodyContent };
       await runtime.cacheManager.set(`${this.cacheKey}/${cacheKey}`, {
         url,
@@ -174,13 +160,7 @@ var _BrowserService = class _BrowserService extends Service {
     }
   }
   async detectCaptcha(page) {
-    const captchaSelectors = [
-      'iframe[src*="captcha"]',
-      'div[class*="captcha"]',
-      "#captcha",
-      ".g-recaptcha",
-      ".h-captcha"
-    ];
+    const captchaSelectors = ['iframe[src*="captcha"]', 'div[class*="captcha"]', "#captcha", ".g-recaptcha", ".h-captcha"];
     for (const selector of captchaSelectors) {
       const element = await page.$(selector);
       if (element) return true;
@@ -216,9 +196,7 @@ var _BrowserService = class _BrowserService extends Service {
   }
   async getHCaptchaWebsiteKey(page) {
     return page.evaluate(() => {
-      const hcaptchaIframe = document.querySelector(
-        'iframe[src*="hcaptcha.com"]'
-      );
+      const hcaptchaIframe = document.querySelector('iframe[src*="hcaptcha.com"]');
       if (hcaptchaIframe) {
         const src = hcaptchaIframe.getAttribute("src");
         const match = src?.match(/sitekey=([^&]*)/);
@@ -245,9 +223,7 @@ var _BrowserService = class _BrowserService extends Service {
       return await this.fetchPageContent(googleSearchUrl, runtime);
     } catch (error) {
       elizaLogger.error("Error fetching from Google Search:", error);
-      elizaLogger.error(
-        "Failed to fetch content from alternative sources"
-      );
+      elizaLogger.error("Failed to fetch content from alternative sources");
       return {
         title: url,
         description: "Error, could not fetch content from alternative sources",
